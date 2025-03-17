@@ -35,7 +35,7 @@ in
         watchdog
       ];
       extraBuildInputs = [
-        inputs.fabric-gray.packages.${system}.default
+        fabric-gray
         networkmanager
         networkmanager.dev
         playerctl
