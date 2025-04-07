@@ -1,9 +1,10 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 let
-  ax-shell = builtins.fetchGit {
-    url = "https://github.com/HeyImKyu/Ax-Shell.git";
-    ref = "main";
-    rev = "64f55eb4ac4d73bb8b9756dc5154afbe41c69ebc";
+  ax-shell = pkgs.fetchFromGitHub {
+    owner = "HeyImKyu";
+    repo = "ax-shell";
+    rev = "310a2210f2cc639dec6962c63ec4024f7f288f26";
+    hash = "sha256-Mbaw+vNk9sDOWPNCbK9PdTe8mzl3ijXIvOI5EUwfxBI=";
   };
 in
 {
@@ -22,9 +23,12 @@ in
   home.packages = with pkgs; [
     matugen
     cava
-    fabric
-    fabric-cli
-    (fabric-run-widget.override {
+    hyprsunset
+    wlinhibit
+    tesseract
+    imagemagick
+    nur.repos.HeyImKyu.fabric-cli
+    (nur.repos.HeyImKyu.run-widget.override {
       extraPythonPackages = with python3Packages; [
         ijson
         pillow
@@ -33,14 +37,21 @@ in
         setproctitle
         toml
         watchdog
+        thefuzz
+        numpy
+        chardet
       ];
       extraBuildInputs = [
-        fabric-gray
+        nur.repos.HeyImKyu.fabric-gray
         networkmanager
         networkmanager.dev
         playerctl
       ];
     })
-    fabric-cli
+  ];
+  
+
+  wayland.windowManager.hyprland.settings.layerrule = [
+    "noanim, fabric"
   ];
 }
